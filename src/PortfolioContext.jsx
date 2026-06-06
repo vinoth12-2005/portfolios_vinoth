@@ -7,6 +7,7 @@ const defaultData = {
     lastName: 'M',
     photo: '/secure_docs/vinoth.png',
     email: 'vinothcyberstudent@gmail.com',
+    contactEmail: 'vinothjpvm@gmail.com',
     github: 'https://github.com/vinoth12-2005',
     githubUsername: 'vinoth12-2005',
     linkedin: 'https://linkedin.com/in/vinothcyberstudent',

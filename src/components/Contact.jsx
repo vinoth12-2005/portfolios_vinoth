@@ -1,26 +1,16 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FiMail, FiMapPin, FiSend } from 'react-icons/fi';
+import { FiMail, FiMapPin, FiSend, FiPaperclip } from 'react-icons/fi';
 import { usePortfolio } from '../PortfolioContext';
 
 export default function Contact() {
   const { data } = usePortfolio();
   const { profile } = data;
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [subject, setSubject] = useState('');
-  const [message, setMessage] = useState('');
-  const [sent, setSent] = useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const mailtoLink = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${name} (${email})\n\n${message}`)}`;
-    window.open(mailtoLink, '_blank');
-    setSent(true);
-    setTimeout(() => setSent(false), 3000);
-  };
+  
+  // We use formsubmit.co which requires the email in the action URL
+  const targetEmail = profile.contactEmail || profile.email;
 
   return (
     <section id="contact" className="py-20 lg:py-28 relative" ref={ref}>
@@ -38,59 +28,55 @@ export default function Contact() {
                 <div className="terminal-dot bg-red-500" />
                 <div className="terminal-dot bg-yellow-500" />
                 <div className="terminal-dot bg-green-500" />
-                <span className="text-cyber-green/50 text-xs font-mono ml-2">contact-form</span>
+                <span className="text-cyber-green/50 text-xs font-mono ml-2">secure-transmission</span>
               </div>
-              <form onSubmit={handleSubmit} className="p-6 space-y-5">
+              <form action={`https://formsubmit.co/${targetEmail}`} method="POST" encType="multipart/form-data" className="p-6 space-y-5">
+                {/* FormSubmit Configuration Fields */}
+                <input type="hidden" name="_next" value={window.location.href} />
+                <input type="hidden" name="_subject" value="New Message & Document from Portfolio!" />
+                <input type="hidden" name="_template" value="box" />
+                
                 <div>
                   <label className="text-cyber-green/60 text-xs font-mono mb-2 block">NAME:</label>
                   <input
                     type="text"
+                    name="name"
                     required
-                    value={name}
-                    onChange={e => setName(e.target.value)}
                     placeholder="Your full name"
                     className="w-full px-4 py-3 bg-cyber-darker border border-cyber-green/20 rounded-lg text-gray-200 font-mono text-sm outline-none focus:border-cyber-green focus:shadow-[0_0_15px_rgba(0,255,65,0.15)] transition-all placeholder:text-gray-600"
-                    id="contact-name"
                   />
                 </div>
                 <div>
                   <label className="text-cyber-green/60 text-xs font-mono mb-2 block">EMAIL:</label>
                   <input
                     type="email"
+                    name="email"
                     required
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
                     placeholder="your@email.com"
                     className="w-full px-4 py-3 bg-cyber-darker border border-cyber-green/20 rounded-lg text-gray-200 font-mono text-sm outline-none focus:border-cyber-green focus:shadow-[0_0_15px_rgba(0,255,65,0.15)] transition-all placeholder:text-gray-600"
-                    id="contact-email"
-                  />
-                </div>
-                <div>
-                  <label className="text-cyber-green/60 text-xs font-mono mb-2 block">SUBJECT:</label>
-                  <input
-                    type="text"
-                    required
-                    value={subject}
-                    onChange={e => setSubject(e.target.value)}
-                    placeholder="Message subject"
-                    className="w-full px-4 py-3 bg-cyber-darker border border-cyber-green/20 rounded-lg text-gray-200 font-mono text-sm outline-none focus:border-cyber-green focus:shadow-[0_0_15px_rgba(0,255,65,0.15)] transition-all placeholder:text-gray-600"
-                    id="contact-subject"
                   />
                 </div>
                 <div>
                   <label className="text-cyber-green/60 text-xs font-mono mb-2 block">MESSAGE:</label>
                   <textarea
+                    name="message"
                     required
                     rows="4"
-                    value={message}
-                    onChange={e => setMessage(e.target.value)}
                     placeholder="Type your message here..."
                     className="w-full px-4 py-3 bg-cyber-darker border border-cyber-green/20 rounded-lg text-gray-200 font-mono text-sm outline-none focus:border-cyber-green focus:shadow-[0_0_15px_rgba(0,255,65,0.15)] transition-all resize-none placeholder:text-gray-600"
-                    id="contact-message"
                   />
                 </div>
-                <button type="submit" className="cyber-btn cyber-btn-primary w-full flex items-center justify-center gap-2" id="contact-submit">
-                  <FiSend /> {sent ? '✓ Opening Mail Client...' : 'Send Message'}
+                <div>
+                  <label className="text-cyber-green/60 text-xs font-mono mb-2 block flex items-center gap-2"><FiPaperclip /> ATTACH DOCUMENT (Optional):</label>
+                  <p className="text-[10px] text-gray-500 mb-2 font-mono">Upload offer letters, job descriptions, or other files.</p>
+                  <input
+                    type="file"
+                    name="attachment"
+                    className="w-full text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border file:border-cyber-green/30 file:text-xs file:font-mono file:bg-cyber-darker file:text-cyber-green hover:file:bg-cyber-green/10 cursor-pointer"
+                  />
+                </div>
+                <button type="submit" className="cyber-btn cyber-btn-primary w-full flex items-center justify-center gap-2 mt-4">
+                  <FiSend /> Send Message
                 </button>
               </form>
             </div>
@@ -100,7 +86,7 @@ export default function Contact() {
             <div className="cyber-card p-6">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 flex items-center justify-center bg-cyber-green/10 rounded-xl border border-cyber-green/20"><FiMail className="text-cyber-green text-xl" /></div>
-                <div><h4 className="text-white font-semibold text-sm">Email</h4><p className="text-cyber-green/60 text-sm font-mono">{profile.email}</p></div>
+                <div><h4 className="text-white font-semibold text-sm">Email</h4><p className="text-cyber-green/60 text-sm font-mono">{targetEmail}</p></div>
               </div>
             </div>
             <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="cyber-card p-6 flex items-center gap-4 block">
@@ -127,3 +113,4 @@ export default function Contact() {
     </section>
   );
 }
+

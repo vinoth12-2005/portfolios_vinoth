@@ -42,6 +42,7 @@ export default function AdminPanel() {
       <Field label="First Name (Display)" value={data.profile.firstName} onChange={v => updateProfile({ firstName: v })} />
       <Field label="Last Name (Display)" value={data.profile.lastName} onChange={v => updateProfile({ lastName: v })} />
       <Field label="Email" value={data.profile.email} onChange={v => updateProfile({ email: v })} />
+      <Field label="Contact Form Delivery Email" value={data.profile.contactEmail || ''} onChange={v => updateProfile({ contactEmail: v })} />
       <Field label="Bio" value={data.profile.bio} onChange={v => updateProfile({ bio: v })} textarea />
       <Field label="Location" value={data.profile.location} onChange={v => updateProfile({ location: v })} />
       <Field label="GitHub URL" value={data.profile.github} onChange={v => updateProfile({ github: v })} />
