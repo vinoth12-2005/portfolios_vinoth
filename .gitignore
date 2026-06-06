@@ -24,4 +24,3 @@ dist-ssr
 *.sw?
 
 # Private Assets (Certificates, Resumes)
-public/secure_docs/
