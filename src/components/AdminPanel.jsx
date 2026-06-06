@@ -49,8 +49,20 @@ export default function AdminPanel() {
       <Field label="LinkedIn URL" value={data.profile.linkedin} onChange={v => updateProfile({ linkedin: v })} />
       <Field label="LinkedIn Username" value={data.profile.linkedinUsername} onChange={v => updateProfile({ linkedinUsername: v })} />
       <Field label="Photo URL (path)" value={data.profile.photo} onChange={v => updateProfile({ photo: v })} />
+      <div className="mb-3 p-3 border border-cyber-green/10 rounded-lg bg-cyber-darker/30">
+        <label className="text-cyber-green/60 text-[10px] font-mono mb-2 block uppercase">Or Upload New Photo directly</label>
+        <input type="file" accept="image/*" onChange={(e) => {
+          const file = e.target.files[0];
+          if (file) {
+            if (file.size > 2 * 1024 * 1024) return alert("File too large! Must be under 2MB.");
+            const reader = new FileReader();
+            reader.onload = (ev) => updateProfile({ photo: ev.target.result });
+            reader.readAsDataURL(file);
+          }
+        }} className="text-xs text-gray-400 w-full file:mr-4 file:py-1.5 file:px-3 file:rounded file:border file:border-cyber-green/20 file:text-xs file:font-mono file:bg-cyber-darker file:text-cyber-green hover:file:bg-cyber-green/10 cursor-pointer" />
+      </div>
       <Field label="Resume URL (path)" value={data.profile.resumeUrl} onChange={v => updateProfile({ resumeUrl: v })} />
-      <p className="text-gray-600 text-[10px] font-mono mt-2">Tip: Place new files in public/assets/ and use /assets/filename.ext</p>
+      <p className="text-gray-600 text-[10px] font-mono mt-2">Tip: To use external files, paste a URL (like Google Drive or Imgur link).</p>
       <h4 className="text-cyber-green text-xs font-mono mt-4 mb-2">TYPING ROLES:</h4>
       {data.roles.map((r, i) => (
         <div key={i} className="flex gap-2 mb-2">
