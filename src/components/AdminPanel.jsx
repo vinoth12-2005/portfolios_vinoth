@@ -63,7 +63,25 @@ export default function AdminPanel() {
         }} className="text-xs text-gray-400 w-full file:mr-4 file:py-1.5 file:px-3 file:rounded file:border file:border-cyber-green/20 file:text-xs file:font-mono file:bg-cyber-darker file:text-cyber-green hover:file:bg-cyber-green/10 cursor-pointer" />
       </div>
       <Field label="Resume URL (path)" value={data.profile.resumeUrl} onChange={v => updateProfile({ resumeUrl: v })} />
-      <p className="text-gray-600 text-[10px] font-mono mt-2">Tip: To use external files, paste a URL (like Google Drive or Imgur link).</p>
+      <div className="mb-3 p-3 border border-cyber-green/10 rounded-lg bg-cyber-darker/30">
+        <label className="text-cyber-green/60 text-[10px] font-mono mb-2 block uppercase">Or Upload New Resume PDF directly</label>
+        <input type="file" accept="application/pdf,.pdf" onChange={(e) => {
+          const file = e.target.files[0];
+          if (file) {
+            if (file.size > 10 * 1024 * 1024) return alert("File too large! Must be under 10MB.");
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+              updateProfile({ resumeUrl: ev.target.result });
+              flash('Resume uploaded & saved!');
+            };
+            reader.readAsDataURL(file);
+          }
+        }} className="text-xs text-gray-400 w-full file:mr-4 file:py-1.5 file:px-3 file:rounded file:border file:border-cyber-green/20 file:text-xs file:font-mono file:bg-cyber-darker file:text-cyber-green hover:file:bg-cyber-green/10 cursor-pointer" />
+        {data.profile.resumeUrl && data.profile.resumeUrl.startsWith('data:') && (
+          <p className="text-cyber-green/60 text-[10px] font-mono mt-2">✓ Custom resume PDF uploaded — showing on site</p>
+        )}
+      </div>
+      <p className="text-gray-600 text-[10px] font-mono mt-2">Tip: Upload a PDF directly, or paste a file path like /secure_docs/resume.pdf or a Google Drive link.</p>
       <h4 className="text-cyber-green text-xs font-mono mt-4 mb-2">TYPING ROLES:</h4>
       {data.roles.map((r, i) => (
         <div key={i} className="flex gap-2 mb-2">

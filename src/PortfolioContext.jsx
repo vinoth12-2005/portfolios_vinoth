@@ -131,7 +131,23 @@ export function PortfolioProvider({ children }) {
       const saved = localStorage.getItem('portfolio_full_data');
       if (saved) {
         const parsed = JSON.parse(saved);
-        return { ...defaultData, ...parsed };
+        // Deep merge: for each key, if both are plain objects, merge them
+        const merged = { ...defaultData };
+        Object.keys(parsed).forEach((key) => {
+          if (
+            parsed[key] !== null &&
+            typeof parsed[key] === 'object' &&
+            !Array.isArray(parsed[key]) &&
+            defaultData[key] !== null &&
+            typeof defaultData[key] === 'object' &&
+            !Array.isArray(defaultData[key])
+          ) {
+            merged[key] = { ...defaultData[key], ...parsed[key] };
+          } else {
+            merged[key] = parsed[key];
+          }
+        });
+        return merged;
       }
     } catch (e) {}
     return defaultData;
