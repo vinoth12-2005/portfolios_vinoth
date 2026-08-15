@@ -26,7 +26,7 @@ export default function Projects() {
 
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 28 }}>
           {data.projects.map((proj, i) => {
-            const color = PROJ_COLORS[i % PROJ_COLORS.length];
+            const color = proj.color || PROJ_COLORS[i % PROJ_COLORS.length];
             return (
               <motion.div
                 key={proj.id}

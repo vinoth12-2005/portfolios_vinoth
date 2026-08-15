@@ -103,6 +103,24 @@ const defaultData = {
       highlights: ['OWASP Compliant', 'SQL Injection Prevention', 'Secure Auth'],
       color: '#22d3ee',
     },
+    {
+      id: 'p3',
+      title: 'Zoro AI — Linux Intelligence & Cybersecurity Operating Assistant',
+      description: 'An advanced, Linux-native AI companion, system administrator, network analyzer, threat hunting assistant, and VAPT tool engine. Features an interactive terminal UI, local/cloud LLM intelligence, voice controls, and automated PDF report compilation.',
+      github: 'https://github.com/vinoth12-2005/Zoro-AI',
+      tags: ['Python', 'AI/LLM', 'Linux Security', 'VAPT', 'MITRE ATT&CK'],
+      highlights: ['Dual Local/Cloud AI', 'Interactive TUI Loop', 'Automated PDF/Word Reports'],
+      color: '#ec4899',
+    },
+    {
+      id: 'p4',
+      title: 'ReconX — Advanced Cybersecurity Reconnaissance Platform',
+      description: 'A production-quality terminal reconnaissance framework for automated target intelligence mapping. Implements subdomain enumeration, Nmap-integrated port scanning, live host profiling, technology discovery, and DNS auditing saved to a persistent SQLite backend.',
+      github: 'https://github.com/vinoth12-2005/ReconX',
+      tags: ['Network Recon', 'Subdomain Enum', 'SQLite', 'TUI REPL', 'Click CLI'],
+      highlights: ['Modular Plugin Arch', 'Persistent SQLite Scan Database', 'Interactive prompt-toolkit REPL'],
+      color: '#f59e0b',
+    },
   ],
   certifications: [
     { id: 'c1', title: 'Advanced Ethical Hacking in Tamil', issuer: 'GUVI & HCL', icon: '🛡️', color: '#8b5cf6', file: '/secure_docs/Guvi_certificate.pdf' },
@@ -114,7 +132,7 @@ const defaultData = {
   ],
   achievements: [
     { id: 'a1', number: 6, suffix: '+', label: 'Certifications', color: '#8b5cf6' },
-    { id: 'a2', number: 2, suffix: '+', label: 'Security Projects', color: '#22d3ee' },
+    { id: 'a2', number: 4, suffix: '+', label: 'Security Projects', color: '#22d3ee' },
     { id: 'a3', number: 0, suffix: '', label: 'Cybersecurity Student', color: '#ec4899', isText: true },
     { id: 'a4', number: 0, suffix: '', label: 'Linux Enthusiast', color: '#f59e0b', isText: true },
   ],
@@ -150,6 +168,13 @@ export function PortfolioProvider({ children }) {
               if (!certMap.has(dc.id)) certMap.set(dc.id, dc);
             });
             merged.certifications = Array.from(certMap.values());
+          } else if (Array.isArray(parsed[key]) && key === 'projects') {
+            // Guarantee all default projects (p1 to p4) exist
+            const projMap = new Map(parsed[key].map(p => [p.id, p]));
+            defaultData.projects.forEach(dp => {
+              if (!projMap.has(dp.id)) projMap.set(dp.id, dp);
+            });
+            merged.projects = Array.from(projMap.values());
           } else {
             merged[key] = parsed[key];
           }
