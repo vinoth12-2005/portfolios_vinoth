@@ -1,100 +1,123 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FiUser, FiBook, FiMapPin } from 'react-icons/fi';
+import { FiMail, FiMapPin, FiBook, FiGithub, FiLinkedin } from 'react-icons/fi';
 import { usePortfolio } from '../PortfolioContext';
+
+const SectionHeader = ({ label, heading }) => (
+  <div style={{ marginBottom: 56 }}>
+    <span className="q-label">{label}</span>
+    <h2 className="q-heading" style={{ marginTop: 8 }}>{heading}</h2>
+    <div className="q-section-line" />
+  </div>
+);
 
 export default function About() {
   const { data } = usePortfolio();
   const { profile, education } = data;
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
 
+  const infoItems = [
+    { icon: '👤', label: 'Name',       value: profile.name },
+    { icon: '🎓', label: 'Degree',     value: education.degree },
+    { icon: '🏫', label: 'University', value: education.university },
+    { icon: '📊', label: 'CGPA',       value: education.cgpa },
+    { icon: '📍', label: 'Location',   value: profile.location },
+    { icon: '💼', label: 'Role',       value: 'Cybersecurity Student' },
+    { icon: '🎯', label: 'Focus',      value: 'VAPT & Ethical Hacking' },
+    { icon: '🟢', label: 'Status',     value: '● Open to Opportunities' },
+  ];
+
+  const interests = [
+    'Penetration Testing & Red Teaming',
+    'Web Application Security (OWASP)',
+    'Network Security & Forensics',
+    'Linux Administration & Hardening',
+    'Secure Software Development',
+  ];
+
   return (
-    <section id="about" className="py-20 lg:py-28 relative" ref={ref}>
-      <div className="absolute inset-0 cyber-grid-bg opacity-50" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="mb-16">
-          <p className="font-mono text-cyber-green/60 text-sm mb-2">{'>'} cat about_me.txt</p>
-          <h2 className="section-title text-3xl sm:text-4xl text-white">About <span className="text-cyber-green">Me</span></h2>
+    <section id="about" style={{ padding: '96px 0', position: 'relative' }} ref={ref}>
+      {/* Background */}
+      <div style={{
+        position: 'absolute', right: -100, top: 0, width: 400, height: 400,
+        background: 'radial-gradient(circle, rgba(139,92,246,0.08) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px' }}>
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }}>
+          <SectionHeader label="// cat about_me.txt" heading={<>About <span className="grad-text">Me</span></>} />
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-10">
-          <motion.div initial={{ opacity: 0, x: -50 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.2 }}>
-            <div className="terminal-window glow-box">
-              <div className="terminal-header">
-                <div className="terminal-dot bg-red-500" />
-                <div className="terminal-dot bg-yellow-500" />
-                <div className="terminal-dot bg-green-500" />
-                <span className="text-cyber-green/50 text-xs font-mono ml-2">vinoth@kali:~/about</span>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 32 }}>
+
+          {/* Terminal */}
+          <motion.div initial={{ opacity: 0, x: -40 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.15 }}>
+            <div className="q-terminal">
+              <div className="q-terminal-bar">
+                <div className="q-dot-red" /><div className="q-dot-yellow" /><div className="q-dot-green" />
+                <span style={{ fontFamily: 'Fira Code', fontSize: '0.7rem', color: '#8b5cf6', marginLeft: 8 }}>root@vinoth-sec:~</span>
               </div>
-              <div className="terminal-body">
-                <p className="mb-4">
-                  <span className="text-cyber-green">vinoth@kali</span><span className="text-white">:</span>
-                  <span className="text-cyber-cyan">~</span><span className="text-white">$ </span>
-                  <span className="text-gray-300">whoami</span>
-                </p>
-                <p className="text-gray-300 leading-relaxed mb-6">{profile.bio}</p>
-                <p className="mb-3">
-                  <span className="text-cyber-green">vinoth@kali</span><span className="text-white">:</span>
-                  <span className="text-cyber-cyan">~</span><span className="text-white">$ </span>
-                  <span className="text-gray-300">cat interests.txt</span>
-                </p>
-                <ul className="space-y-2 text-gray-400 text-sm">
-                  <li className="flex items-center gap-2"><span className="text-cyber-green">▸</span> Penetration Testing & Red Teaming</li>
-                  <li className="flex items-center gap-2"><span className="text-cyber-green">▸</span> Web Application Security</li>
-                  <li className="flex items-center gap-2"><span className="text-cyber-green">▸</span> Network Security & Forensics</li>
-                  <li className="flex items-center gap-2"><span className="text-cyber-green">▸</span> Linux Administration & Hardening</li>
-                  <li className="flex items-center gap-2"><span className="text-cyber-green">▸</span> Secure Software Development</li>
+              <div className="q-terminal-body">
+                <p><span style={{ color: '#8b5cf6' }}>vinoth@nexus</span><span style={{ color: '#64748b' }}>:~$</span> <span style={{ color: '#e2e8f0' }}>cat about.txt</span></p>
+                <p style={{ color: '#94a3b8', margin: '12px 0', lineHeight: 1.8 }}>{profile.bio}</p>
+
+                <p style={{ marginTop: 16 }}><span style={{ color: '#8b5cf6' }}>vinoth@nexus</span><span style={{ color: '#64748b' }}>:~$</span> <span style={{ color: '#e2e8f0' }}>cat interests.txt</span></p>
+                <ul style={{ marginTop: 8, listStyle: 'none' }}>
+                  {interests.map(i => (
+                    <li key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, color: '#94a3b8' }}>
+                      <span style={{ color: '#22d3ee' }}>▹</span> {i}
+                    </li>
+                  ))}
                 </ul>
+
+                <p style={{ marginTop: 16 }}><span style={{ color: '#8b5cf6' }}>vinoth@nexus</span><span style={{ color: '#64748b' }}>:~$</span> <span style={{ color: '#e2e8f0' }}>echo $MISSION</span></p>
+                <p style={{ color: '#a78bfa', fontStyle: 'italic', marginTop: 6 }}>"Secure the digital world, one exploit at a time."</p>
+                <span style={{ color: '#8b5cf6' }}>_</span>
               </div>
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 50 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.8, delay: 0.4 }} className="space-y-5">
-            <div className="cyber-card p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center bg-cyber-green/10 rounded-lg border border-cyber-green/20">
-                  <FiBook className="text-cyber-green text-xl" />
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold text-lg mb-1">Education</h3>
-                  <p className="text-cyber-text text-sm font-medium">{education.degree}</p>
-                  <p className="text-gray-400 text-sm mt-1">{education.college}</p>
-                  <p className="text-gray-500 text-xs mt-1">{education.university}</p>
-                  <div className="mt-3 inline-flex items-center gap-2 bg-cyber-green/10 px-3 py-1 rounded-full border border-cyber-green/20">
-                    <span className="text-cyber-green font-mono text-sm font-bold">CGPA: {education.cgpa}</span>
+          {/* Info Grid + Social */}
+          <motion.div initial={{ opacity: 0, x: 40 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.25 }}>
+            <div className="glass" style={{ padding: 28, marginBottom: 24 }}>
+              <h3 style={{ fontFamily: 'Syne', fontWeight: 700, color: '#f8fafc', marginBottom: 20, fontSize: '1rem' }}>Quick Info</h3>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+                {infoItems.map(item => (
+                  <div key={item.label} style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                    <span style={{ fontFamily: 'Fira Code', fontSize: '0.65rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: 1 }}>
+                      {item.icon} {item.label}
+                    </span>
+                    <span style={{
+                      fontSize: '0.82rem', color: item.label === 'Status' ? '#22d3ee' : '#cbd5e1',
+                      fontWeight: 500, fontFamily: 'Space Grotesk',
+                    }}>{item.value}</span>
                   </div>
-                </div>
+                ))}
               </div>
             </div>
 
-            <div className="cyber-card p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center bg-cyber-green/10 rounded-lg border border-cyber-green/20">
-                  <FiUser className="text-cyber-green text-xl" />
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold text-lg mb-3">Quick Info</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                    <div><span className="text-cyber-green/60 font-mono text-xs">NAME:</span><p className="text-gray-300">{profile.name}</p></div>
-                    <div><span className="text-cyber-green/60 font-mono text-xs">ROLE:</span><p className="text-gray-300">Cybersecurity Student</p></div>
-                    <div><span className="text-cyber-green/60 font-mono text-xs">FOCUS:</span><p className="text-gray-300">VAPT & Ethical Hacking</p></div>
-                    <div><span className="text-cyber-green/60 font-mono text-xs">STATUS:</span><p className="text-cyber-green">● Active</p></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="cyber-card p-6">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 flex items-center justify-center bg-cyber-green/10 rounded-lg border border-cyber-green/20">
-                  <FiMapPin className="text-cyber-green text-xl" />
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold text-lg mb-1">Location</h3>
-                  <p className="text-gray-400 text-sm">{profile.location}, India</p>
-                  <p className="text-cyber-green/50 text-xs font-mono mt-1">[TIMEZONE] IST (UTC+5:30)</p>
-                </div>
-              </div>
+            {/* Contact + Social */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12 }}>
+              <a href={`mailto:${profile.email}`} className="glass" style={{
+                display: 'flex', alignItems: 'center', gap: 8, padding: '12px 18px',
+                textDecoration: 'none', color: '#cbd5e1', fontSize: '0.82rem',
+                fontFamily: 'Space Grotesk', flex: 1,
+              }}>
+                <FiMail style={{ color: '#8b5cf6' }} /> {profile.contactEmail || profile.email}
+              </a>
+              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="glass q-btn-ghost" style={{
+                display: 'flex', alignItems: 'center', gap: 8, padding: '12px 18px',
+                textDecoration: 'none', color: '#cbd5e1', fontSize: '0.82rem',
+              }}>
+                <FiGithub style={{ color: '#a78bfa' }} /> GitHub
+              </a>
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="glass" style={{
+                display: 'flex', alignItems: 'center', gap: 8, padding: '12px 18px',
+                textDecoration: 'none', color: '#cbd5e1', fontSize: '0.82rem',
+              }}>
+                <FiLinkedin style={{ color: '#22d3ee' }} /> LinkedIn
+              </a>
             </div>
           </motion.div>
         </div>

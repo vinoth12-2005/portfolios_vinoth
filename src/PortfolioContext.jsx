@@ -6,7 +6,7 @@ const defaultData = {
     firstName: 'VINOTH',
     lastName: 'M',
     photo: '/secure_docs/vinoth.png',
-    email: 'vinothcyberstudent@gmail.com',
+    email: 'vinothjpvm@gmail.com',
     contactEmail: 'vinothjpvm@gmail.com',
     github: 'https://github.com/vinoth12-2005',
     githubUsername: 'vinoth12-2005',
@@ -14,7 +14,7 @@ const defaultData = {
     linkedinUsername: 'vinothcyberstudent',
     location: 'Tirunelveli, Tamil Nadu',
     bio: 'Cybersecurity-focused Computer Science engineer with hands-on experience in Linux administration, VAPT, network security, and ethical hacking. Passionate about penetration testing, security research, and secure application development.',
-    resumeUrl: '/secure_docs/Vinoth_Resume_ATS.pdf',
+    resumeUrl: '/VINOTH_M_resume.pdf',
   },
   education: {
     degree: 'B.E Computer Science & Engineering (Cyber Security)',
@@ -32,7 +32,7 @@ const defaultData = {
     {
       id: 's1',
       title: 'Programming',
-      color: '#00ff41',
+      color: '#8b5cf6',
       skills: [
         { name: 'Python', level: 85 },
         { name: 'JavaScript', level: 75 },
@@ -42,7 +42,7 @@ const defaultData = {
     {
       id: 's2',
       title: 'Web Technologies',
-      color: '#00e5ff',
+      color: '#22d3ee',
       skills: [
         { name: 'HTML', level: 90 },
         { name: 'CSS', level: 85 },
@@ -51,7 +51,7 @@ const defaultData = {
     {
       id: 's3',
       title: 'OS & Networking',
-      color: '#8b5cf6',
+      color: '#6366f1',
       skills: [
         { name: 'Linux Administration', level: 88 },
         { name: 'Kali Linux', level: 85 },
@@ -62,7 +62,7 @@ const defaultData = {
     {
       id: 's4',
       title: 'Security Tools',
-      color: '#ff073a',
+      color: '#ec4899',
       skills: [
         { name: 'Burp Suite', level: 82 },
         { name: 'Wireshark', level: 85 },
@@ -92,7 +92,7 @@ const defaultData = {
       github: 'https://github.com/vinoth12-2005/VULnix2.0-debug-challenge',
       tags: ['Python', 'Java', 'C', 'Automation', 'Testing'],
       highlights: ['50+ Active Participants', 'Multi-language Support', 'Automated Scoring'],
-      color: '#00ff41',
+      color: '#8b5cf6',
     },
     {
       id: 'p2',
@@ -101,21 +101,21 @@ const defaultData = {
       github: 'https://github.com/vinoth12-2005/conference-management-system',
       tags: ['Security', 'Full-Stack', 'OWASP', 'SQL Injection Prevention'],
       highlights: ['OWASP Compliant', 'SQL Injection Prevention', 'Secure Auth'],
-      color: '#00e5ff',
+      color: '#22d3ee',
     },
   ],
   certifications: [
-    { id: 'c1', title: 'Advanced Ethical Hacking in Tamil', issuer: 'GUVI & HCL', icon: '🛡️', color: '#00ff41', file: '/secure_docs/Guvi_certificate.pdf' },
-    { id: 'c2', title: 'Network Security: Mastering Cybersecurity & Ethical Hacking', issuer: 'Udemy', icon: '🔐', color: '#00e5ff', file: '/secure_docs/Network_certificate.pdf' },
+    { id: 'c1', title: 'Advanced Ethical Hacking in Tamil', issuer: 'GUVI & HCL', icon: '🛡️', color: '#8b5cf6', file: '/secure_docs/Guvi_certificate.pdf' },
+    { id: 'c2', title: 'Network Security: Mastering Cybersecurity & Ethical Hacking', issuer: 'Udemy', icon: '🔐', color: '#22d3ee', file: '/secure_docs/Network_certificate.pdf' },
     { id: 'c3', title: 'Oracle Cloud Infrastructure AI Foundations Associate', issuer: 'Oracle', icon: '☁️', color: '#f59e0b', file: '/secure_docs/Oracle_vinoth.pdf' },
-    { id: 'c4', title: 'Encoder-Decoder Architecture', issuer: 'Google Cloud', icon: '🧠', color: '#8b5cf6', file: '/secure_docs/vinoth_certificate_google.pdf' },
-    { id: 'c5', title: 'Cyberentityz Industrial Visit Certificate', issuer: 'Cyberentityz', icon: '🏭', color: '#ff073a', file: '/secure_docs/iv_certificate_vinoth.pdf' },
-    { id: 'c6', title: 'IBM SkillsBuild Cybersecurity Fundamentals', issuer: 'IBM SkillsBuild', icon: '🔒', color: '#0062ff', file: '/secure_docs/IBM_SkillsBuild_Cybersecurity_Fundamentals.pdf' },
+    { id: 'c4', title: 'Encoder-Decoder Architecture', issuer: 'Google Cloud', icon: '🧠', color: '#6366f1', file: '/secure_docs/vinoth_certificate_google.pdf' },
+    { id: 'c5', title: 'Cyberentityz Industrial Visit Certificate', issuer: 'Cyberentityz', icon: '🏭', color: '#ec4899', file: '/secure_docs/iv_certificate_vinoth.pdf' },
+    { id: 'c6', title: 'Cybersecurity Fundamentals', issuer: 'IBM SkillsBuild', icon: '🔒', color: '#10b981', file: '/secure_docs/IBM_SkillsBuild_Cybersecurity_Fundamentals.pdf' },
   ],
   achievements: [
-    { id: 'a1', number: 6, suffix: '+', label: 'Certifications', color: '#00ff41' },
-    { id: 'a2', number: 2, suffix: '+', label: 'Security Projects', color: '#00e5ff' },
-    { id: 'a3', number: 0, suffix: '', label: 'Cybersecurity Student', color: '#8b5cf6', isText: true },
+    { id: 'a1', number: 6, suffix: '+', label: 'Certifications', color: '#8b5cf6' },
+    { id: 'a2', number: 2, suffix: '+', label: 'Security Projects', color: '#22d3ee' },
+    { id: 'a3', number: 0, suffix: '', label: 'Cybersecurity Student', color: '#ec4899', isText: true },
     { id: 'a4', number: 0, suffix: '', label: 'Linux Enthusiast', color: '#f59e0b', isText: true },
   ],
   admin: {
@@ -132,7 +132,6 @@ export function PortfolioProvider({ children }) {
       const saved = localStorage.getItem('portfolio_full_data');
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Deep merge: for each key, if both are plain objects, merge them
         const merged = { ...defaultData };
         Object.keys(parsed).forEach((key) => {
           if (
@@ -144,10 +143,25 @@ export function PortfolioProvider({ children }) {
             !Array.isArray(defaultData[key])
           ) {
             merged[key] = { ...defaultData[key], ...parsed[key] };
+          } else if (Array.isArray(parsed[key]) && key === 'certifications') {
+            // Guarantee all default certifications (c1 to c6) exist
+            const certMap = new Map(parsed[key].map(c => [c.id, c]));
+            defaultData.certifications.forEach(dc => {
+              if (!certMap.has(dc.id)) certMap.set(dc.id, dc);
+            });
+            merged.certifications = Array.from(certMap.values());
           } else {
             merged[key] = parsed[key];
           }
         });
+        // Always enforce requested email, resume, valid photo, and 6 certifications count
+        if (merged.profile) {
+          merged.profile.email = 'vinothjpvm@gmail.com';
+          merged.profile.contactEmail = 'vinothjpvm@gmail.com';
+          merged.profile.resumeUrl = '/VINOTH_M_resume.pdf';
+          merged.profile.photo = '/secure_docs/vinoth.png';
+        }
+        merged.achievements = defaultData.achievements;
         return merged;
       }
     } catch (e) {}

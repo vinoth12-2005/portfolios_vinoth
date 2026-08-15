@@ -11,8 +11,7 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Certifications from './components/Certifications';
 import Achievements from './components/Achievements';
-import Resume from './components/Resume';
-import Dashboard from './components/Dashboard';
+import ThreatLab from './components/ThreatLab';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import AdminPanel from './components/AdminPanel';
@@ -21,18 +20,18 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 4000);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setLoading(false), 3800);
+    return () => clearTimeout(t);
   }, []);
 
   return (
     <PortfolioProvider>
-      <div className="relative min-h-screen bg-cyber-darker">
+      <div style={{ position: 'relative', minHeight: '100vh', background: '#030014' }}>
         {loading && <LoadingScreen />}
         <MatrixRain />
         <CustomCursor />
         <Particles />
-        <div className="relative z-10">
+        <div style={{ position: 'relative', zIndex: 2 }}>
           <Navbar />
           <Hero />
           <About />
@@ -40,8 +39,7 @@ function App() {
           <Projects />
           <Certifications />
           <Achievements />
-          <Resume />
-          <Dashboard />
+          <ThreatLab />
           <Contact />
           <Footer />
           <AdminPanel />

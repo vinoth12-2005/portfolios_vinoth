@@ -4,11 +4,11 @@ import { useInView } from 'react-intersection-observer';
 import { FiShield, FiActivity, FiWifi, FiLock, FiAlertTriangle, FiServer } from 'react-icons/fi';
 
 const stats = [
-  { label: 'Firewall Status', value: 'ACTIVE', icon: <FiShield />, status: 'online', color: '#00ff41' },
-  { label: 'Network Monitor', value: 'SCANNING', icon: <FiActivity />, status: 'active', color: '#00e5ff' },
+  { label: 'Firewall Status', value: 'ACTIVE', icon: <FiShield />, status: 'online', color: '#00f0ff' },
+  { label: 'Network Monitor', value: 'SCANNING', icon: <FiActivity />, status: 'active', color: '#7000ff' },
   { label: 'WiFi Security', value: 'WPA3', icon: <FiWifi />, status: 'secure', color: '#8b5cf6' },
   { label: 'Encryption', value: 'AES-256', icon: <FiLock />, status: 'enabled', color: '#f59e0b' },
-  { label: 'Threat Level', value: 'LOW', icon: <FiAlertTriangle />, status: 'safe', color: '#00ff41' },
+  { label: 'Threat Level', value: 'LOW', icon: <FiAlertTriangle />, status: 'safe', color: '#00f0ff' },
   { label: 'Server Status', value: 'ONLINE', icon: <FiServer />, status: 'running', color: '#00e5ff' },
 ];
 

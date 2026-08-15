@@ -1,32 +1,28 @@
 import { useMemo } from 'react';
 
+const COLORS = ['#8b5cf6', '#6366f1', '#22d3ee', '#ec4899', '#a78bfa'];
+
 export default function Particles() {
-  const particles = useMemo(() => {
-    return Array.from({ length: 30 }, (_, i) => ({
-      id: i,
-      left: `${Math.random() * 100}%`,
-      width: `${Math.random() * 3 + 1}px`,
-      height: `${Math.random() * 3 + 1}px`,
-      delay: `${Math.random() * 8}s`,
-      duration: `${Math.random() * 10 + 5}s`,
-      opacity: Math.random() * 0.5 + 0.1,
-    }));
-  }, []);
+  const particles = useMemo(() => Array.from({ length: 40 }, (_, i) => ({
+    id: i,
+    left: `${Math.random() * 100}%`,
+    size: `${Math.random() * 2.5 + 0.8}px`,
+    delay: `${Math.random() * 10}s`,
+    duration: `${Math.random() * 12 + 6}s`,
+    color: COLORS[i % COLORS.length],
+  })), []);
 
   return (
     <div className="particle-container">
-      {particles.map((p) => (
-        <div
-          key={p.id}
-          className="particle"
-          style={{
-            left: p.left,
-            width: p.width,
-            height: p.height,
-            animationDelay: p.delay,
-            animationDuration: p.duration,
-          }}
-        />
+      {particles.map(p => (
+        <div key={p.id} className="particle" style={{
+          left: p.left,
+          width: p.size, height: p.size,
+          background: p.color,
+          animationDelay: p.delay,
+          animationDuration: p.duration,
+          boxShadow: `0 0 6px ${p.color}`,
+        }} />
       ))}
     </div>
   );

@@ -1,111 +1,205 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { FiMail, FiMapPin, FiSend, FiPaperclip } from 'react-icons/fi';
+import { FiMail, FiMapPin, FiSend, FiPaperclip, FiGithub, FiLinkedin, FiCheckCircle } from 'react-icons/fi';
 import { usePortfolio } from '../PortfolioContext';
+
+const inputStyle = {
+  width: '100%', padding: '13px 16px',
+  background: 'rgba(255,255,255,0.04)',
+  border: '1px solid rgba(255,255,255,0.08)',
+  borderRadius: 12, color: '#f8fafc',
+  fontFamily: 'Space Grotesk', fontSize: '0.88rem',
+  outline: 'none', transition: 'border-color 0.3s ease',
+};
+
+const DEST_EMAIL = 'vinothjpvm@gmail.com';
 
 export default function Contact() {
   const { data } = usePortfolio();
   const { profile } = data;
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  
-  // We use formsubmit.co which requires the email in the action URL
-  const targetEmail = profile.contactEmail || profile.email;
+
+  const [focused, setFocused]   = useState('');
+  const [sending, setSending]   = useState(false);
+  const [sent, setSent]         = useState(false);
+
+  const cards = [
+    { icon: <FiMail />, label: 'Email', value: DEST_EMAIL, href: `mailto:${DEST_EMAIL}`, color: '#8b5cf6' },
+    { icon: <FiLinkedin />, label: 'LinkedIn', value: profile.linkedinUsername || 'vinothcyberstudent', href: profile.linkedin, color: '#22d3ee' },
+    { icon: <FiGithub />, label: 'GitHub', value: profile.githubUsername || 'vinoth12-2005', href: profile.github, color: '#ec4899' },
+    { icon: <FiMapPin />, label: 'Location', value: profile.location || 'Tirunelveli, Tamil Nadu', href: null, color: '#f59e0b' },
+  ];
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSending(true);
+    const formData = new FormData(e.target);
+
+    fetch(`https://formsubmit.co/ajax/${DEST_EMAIL}`, {
+      method: 'POST',
+      body: formData,
+    })
+      .then(res => res.json())
+      .then(data => {
+        setSending(false);
+        setSent(true);
+      })
+      .catch(err => {
+        // Fallback: regular submit
+        e.target.submit();
+      });
+  };
 
   return (
-    <section id="contact" className="py-20 lg:py-28 relative" ref={ref}>
-      <div className="absolute inset-0 cyber-grid-bg opacity-30" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} className="mb-16">
-          <p className="font-mono text-cyber-green/60 text-sm mb-2">{'>'} ssh contact@vinoth.dev</p>
-          <h2 className="section-title text-3xl sm:text-4xl text-white">Contact <span className="text-cyber-green">Me</span></h2>
+    <section id="contact" style={{ padding: '96px 0', position: 'relative' }} ref={ref}>
+      <div style={{
+        position: 'absolute', left: '50%', top: '10%', transform: 'translateX(-50%)',
+        width: 600, height: 400,
+        background: 'radial-gradient(ellipse, rgba(139,92,246,0.08) 0%, transparent 70%)',
+        pointerEvents: 'none',
+      }} />
+
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 1 }}>
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6 }} style={{ marginBottom: 56 }}>
+          <span className="q-label">// ssh contact@vinothjpvm.gmail.com</span>
+          <h2 className="q-heading" style={{ marginTop: 8 }}>Let's <span className="grad-text">Connect</span></h2>
+          <div className="q-section-line" />
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-10 max-w-5xl mx-auto">
-          <motion.div initial={{ opacity: 0, x: -50 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }}>
-            <div className="terminal-window glow-box">
-              <div className="terminal-header">
-                <div className="terminal-dot bg-red-500" />
-                <div className="terminal-dot bg-yellow-500" />
-                <div className="terminal-dot bg-green-500" />
-                <span className="text-cyber-green/50 text-xs font-mono ml-2">secure-transmission</span>
-              </div>
-              <form action={`https://formsubmit.co/${targetEmail}`} method="POST" encType="multipart/form-data" className="p-6 space-y-5">
-                {/* FormSubmit Configuration Fields */}
-                <input type="hidden" name="_next" value={window.location.href} />
-                <input type="hidden" name="_subject" value="New Message & Document from Portfolio!" />
-                <input type="hidden" name="_template" value="box" />
-                
-                <div>
-                  <label className="text-cyber-green/60 text-xs font-mono mb-2 block">NAME:</label>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    placeholder="Your full name"
-                    className="w-full px-4 py-3 bg-cyber-darker border border-cyber-green/20 rounded-lg text-gray-200 font-mono text-sm outline-none focus:border-cyber-green focus:shadow-[0_0_15px_rgba(0,255,65,0.15)] transition-all placeholder:text-gray-600"
-                  />
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: 32, maxWidth: 1100, margin: '0 auto' }}>
+
+          {/* Form */}
+          <motion.div initial={{ opacity: 0, x: -40 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.1 }}>
+            <div className="glass" style={{ padding: 32 }}>
+              <h3 style={{ fontFamily: 'Syne', fontWeight: 700, color: '#f8fafc', marginBottom: 8, fontSize: '1.1rem' }}>
+                Send a Message
+              </h3>
+              <p style={{ color: '#64748b', fontSize: '0.8rem', fontFamily: 'Space Grotesk', marginBottom: 24 }}>
+                Messages are delivered directly to <span style={{ color: '#22d3ee' }}>{DEST_EMAIL}</span>.
+              </p>
+
+              {sent ? (
+                <div style={{
+                  padding: 24, borderRadius: 12, background: 'rgba(16,185,129,0.1)',
+                  border: '1px solid rgba(16,185,129,0.3)', textAlign: 'center',
+                }}>
+                  <FiCheckCircle style={{ fontSize: '2.5rem', color: '#10b981', marginBottom: 12 }} />
+                  <h4 style={{ fontFamily: 'Syne', color: '#f8fafc', fontSize: '1.1rem', marginBottom: 6 }}>Message Sent!</h4>
+                  <p style={{ fontFamily: 'Space Grotesk', color: '#94a3b8', fontSize: '0.85rem' }}>
+                    Thank you for reaching out. Your message has been sent to <strong style={{ color: '#10b981' }}>{DEST_EMAIL}</strong>. I will reply to you shortly.
+                  </p>
+                  <button
+                    onClick={() => setSent(false)}
+                    className="q-btn q-btn-outline"
+                    style={{ marginTop: 16, borderColor: '#10b981', color: '#10b981' }}
+                  >
+                    Send Another Message
+                  </button>
                 </div>
-                <div>
-                  <label className="text-cyber-green/60 text-xs font-mono mb-2 block">EMAIL:</label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="your@email.com"
-                    className="w-full px-4 py-3 bg-cyber-darker border border-cyber-green/20 rounded-lg text-gray-200 font-mono text-sm outline-none focus:border-cyber-green focus:shadow-[0_0_15px_rgba(0,255,65,0.15)] transition-all placeholder:text-gray-600"
-                  />
-                </div>
-                <div>
-                  <label className="text-cyber-green/60 text-xs font-mono mb-2 block">MESSAGE:</label>
-                  <textarea
-                    name="message"
-                    required
-                    rows="4"
-                    placeholder="Type your message here..."
-                    className="w-full px-4 py-3 bg-cyber-darker border border-cyber-green/20 rounded-lg text-gray-200 font-mono text-sm outline-none focus:border-cyber-green focus:shadow-[0_0_15px_rgba(0,255,65,0.15)] transition-all resize-none placeholder:text-gray-600"
-                  />
-                </div>
-                <div>
-                  <label className="text-cyber-green/60 text-xs font-mono mb-2 block flex items-center gap-2"><FiPaperclip /> ATTACH DOCUMENT (Optional):</label>
-                  <p className="text-[10px] text-gray-500 mb-2 font-mono">Upload offer letters, job descriptions, or other files.</p>
-                  <input
-                    type="file"
-                    name="attachment"
-                    className="w-full text-xs text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded file:border file:border-cyber-green/30 file:text-xs file:font-mono file:bg-cyber-darker file:text-cyber-green hover:file:bg-cyber-green/10 cursor-pointer"
-                  />
-                </div>
-                <button type="submit" className="cyber-btn cyber-btn-primary w-full flex items-center justify-center gap-2 mt-4">
-                  <FiSend /> Send Message
-                </button>
-              </form>
+              ) : (
+                <form
+                  action={`https://formsubmit.co/${DEST_EMAIL}`}
+                  method="POST"
+                  onSubmit={handleSubmit}
+                  encType="multipart/form-data"
+                  style={{ display: 'flex', flexDirection: 'column', gap: 16 }}
+                >
+                  <input type="hidden" name="_subject" value="🚀 New Message from Vinoth Portfolio Visitor!" />
+                  <input type="hidden" name="_template" value="table" />
+                  <input type="hidden" name="_captcha" value="false" />
+
+                  {['name', 'email'].map(field => (
+                    <div key={field}>
+                      <label style={{ fontFamily: 'Fira Code', fontSize: '0.68rem', color: '#8b5cf6', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>
+                        {field}:
+                      </label>
+                      <input
+                        type={field === 'email' ? 'email' : 'text'}
+                        name={field}
+                        required
+                        placeholder={field === 'name' ? 'Your full name' : 'your@email.com'}
+                        onFocus={() => setFocused(field)}
+                        onBlur={() => setFocused('')}
+                        style={{ ...inputStyle, borderColor: focused === field ? 'rgba(139,92,246,0.5)' : 'rgba(255,255,255,0.08)' }}
+                      />
+                    </div>
+                  ))}
+
+                  <div>
+                    <label style={{ fontFamily: 'Fira Code', fontSize: '0.68rem', color: '#8b5cf6', display: 'block', marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>
+                      message:
+                    </label>
+                    <textarea
+                      name="message" required rows="4"
+                      placeholder="Tell me about your project or cybersecurity opportunity..."
+                      onFocus={() => setFocused('msg')}
+                      onBlur={() => setFocused('')}
+                      style={{ ...inputStyle, resize: 'none', borderColor: focused === 'msg' ? 'rgba(139,92,246,0.5)' : 'rgba(255,255,255,0.08)' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ fontFamily: 'Fira Code', fontSize: '0.68rem', color: '#64748b', display: 'flex', alignItems: 'center', gap: 6, marginBottom: 6, textTransform: 'uppercase', letterSpacing: 1 }}>
+                      <FiPaperclip /> attach file (optional):
+                    </label>
+                    <input
+                      type="file" name="attachment"
+                      style={{
+                        ...inputStyle, padding: '10px 14px',
+                        cursor: 'pointer', fontSize: '0.8rem',
+                      }}
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={sending}
+                    className="q-btn q-btn-primary"
+                    id="contact-send"
+                    style={{ justifyContent: 'center', marginTop: 8 }}
+                  >
+                    <FiSend /> {sending ? 'Transmitting Message...' : 'Send Message'}
+                  </button>
+                </form>
+              )}
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, x: 50 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.4 }} className="space-y-6">
-            <div className="cyber-card p-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 flex items-center justify-center bg-cyber-green/10 rounded-xl border border-cyber-green/20"><FiMail className="text-cyber-green text-xl" /></div>
-                <div><h4 className="text-white font-semibold text-sm">Email</h4><p className="text-cyber-green/60 text-sm font-mono">{targetEmail}</p></div>
+          {/* Contact cards */}
+          <motion.div initial={{ opacity: 0, x: 40 }} animate={inView ? { opacity: 1, x: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }}
+            style={{ display: 'flex', flexDirection: 'column', gap: 16, justifyContent: 'center' }}
+          >
+            {cards.map(c => (
+              c.href
+                ? <a key={c.label} href={c.href} target={c.href.startsWith('http') ? '_blank' : '_self'}
+                    rel="noopener noreferrer" className="glass"
+                    style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '18px 20px', textDecoration: 'none', borderColor: `${c.color}20` }}
+                  >
+                    <div style={{ width: 42, height: 42, borderRadius: 12, background: `${c.color}15`, border: `1px solid ${c.color}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: c.color, fontSize: '1.1rem', flexShrink: 0 }}>{c.icon}</div>
+                    <div>
+                      <div style={{ fontFamily: 'Space Grotesk', fontWeight: 600, color: '#f8fafc', fontSize: '0.88rem' }}>{c.label}</div>
+                      <div style={{ fontFamily: 'Fira Code', fontSize: '0.72rem', color: c.color, opacity: 0.8, marginTop: 2 }}>{c.value}</div>
+                    </div>
+                  </a>
+                : <div key={c.label} className="glass" style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '18px 20px', borderColor: `${c.color}20` }}>
+                    <div style={{ width: 42, height: 42, borderRadius: 12, background: `${c.color}15`, border: `1px solid ${c.color}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: c.color, fontSize: '1.1rem', flexShrink: 0 }}>{c.icon}</div>
+                    <div>
+                      <div style={{ fontFamily: 'Space Grotesk', fontWeight: 600, color: '#f8fafc', fontSize: '0.88rem' }}>{c.label}</div>
+                      <div style={{ fontFamily: 'Fira Code', fontSize: '0.72rem', color: c.color, opacity: 0.8, marginTop: 2 }}>{c.value}</div>
+                    </div>
+                  </div>
+            ))}
+
+            {/* Status card */}
+            <div className="glass" style={{ padding: '20px', borderColor: 'rgba(16,185,129,0.2)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#10b981', animation: 'glowPulse 1.5s ease infinite' }} />
+                <span style={{ fontFamily: 'Space Grotesk', fontWeight: 600, color: '#10b981', fontSize: '0.88rem' }}>Direct Email Relay Active</span>
               </div>
-            </div>
-            <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="cyber-card p-6 flex items-center gap-4 block">
-              <div className="w-12 h-12 flex items-center justify-center bg-blue-500/10 rounded-xl border border-blue-500/20">
-                <svg className="w-5 h-5 text-blue-400" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-              </div>
-              <div><h4 className="text-white font-semibold text-sm">LinkedIn</h4><p className="text-blue-400/60 text-sm font-mono">{profile.linkedinUsername}</p></div>
-            </a>
-            <a href={profile.github} target="_blank" rel="noopener noreferrer" className="cyber-card p-6 flex items-center gap-4 block">
-              <div className="w-12 h-12 flex items-center justify-center bg-white/5 rounded-xl border border-white/10">
-                <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              </div>
-              <div><h4 className="text-white font-semibold text-sm">GitHub</h4><p className="text-gray-400 text-sm font-mono">{profile.githubUsername}</p></div>
-            </a>
-            <div className="cyber-card p-6">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 flex items-center justify-center bg-cyber-red/10 rounded-xl border border-cyber-red/20"><FiMapPin className="text-cyber-red text-xl" /></div>
-                <div><h4 className="text-white font-semibold text-sm">Location</h4><p className="text-gray-400 text-sm">{profile.location}</p></div>
-              </div>
+              <p style={{ fontFamily: 'Space Grotesk', color: '#64748b', fontSize: '0.8rem', lineHeight: 1.6 }}>
+                All form submissions are routed directly to <span style={{ color: '#22d3ee' }}>vinothjpvm@gmail.com</span> with instant inbox notifications.
+              </p>
             </div>
           </motion.div>
         </div>
@@ -113,4 +207,3 @@ export default function Contact() {
     </section>
   );
 }
-

@@ -1,61 +1,35 @@
 import { useEffect, useState } from 'react';
 
 export default function CustomCursor() {
-  const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [dotPos, setDotPos] = useState({ x: 0, y: 0 });
-  const [hovering, setHovering] = useState(false);
-  const [visible, setVisible] = useState(false);
+  const [pos, setPos]         = useState({ x: -100, y: -100 });
+  const [dot, setDot]         = useState({ x: -100, y: -100 });
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
-    // Hide on mobile
-    if ('ontouchstart' in window) return;
-
-    const move = (e) => {
-      setPos({ x: e.clientX - 10, y: e.clientY - 10 });
-      setDotPos({ x: e.clientX - 2.5, y: e.clientY - 2.5 });
-      setVisible(true);
+    const move = (e) => setPos({ x: e.clientX, y: e.clientY });
+    let raf;
+    const follow = (e) => {
+      raf = requestAnimationFrame(() => setDot({ x: e.clientX, y: e.clientY }));
     };
-
-    const enter = () => setVisible(true);
-    const leave = () => setVisible(false);
-
-    const handleHover = (e) => {
-      const target = e.target;
-      if (
-        target.tagName === 'A' ||
-        target.tagName === 'BUTTON' ||
-        target.closest('a') ||
-        target.closest('button') ||
-        target.classList.contains('clickable')
-      ) {
-        setHovering(true);
-      } else {
-        setHovering(false);
-      }
-    };
-
-    document.addEventListener('mousemove', move);
-    document.addEventListener('mouseover', handleHover);
-    document.addEventListener('mouseenter', enter);
-    document.addEventListener('mouseleave', leave);
-
+    const over  = (e) => setHovered(e.target.closest('a,button,[data-hover]') !== null);
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mousemove', follow);
+    window.addEventListener('mouseover', over);
     return () => {
-      document.removeEventListener('mousemove', move);
-      document.removeEventListener('mouseover', handleHover);
-      document.removeEventListener('mouseenter', enter);
-      document.removeEventListener('mouseleave', leave);
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mousemove', follow);
+      window.removeEventListener('mouseover', over);
+      cancelAnimationFrame(raf);
     };
   }, []);
-
-  if (!visible) return null;
 
   return (
     <>
       <div
-        className={`custom-cursor ${hovering ? 'hover' : ''}`}
-        style={{ left: pos.x, top: pos.y }}
+        className={`q-cursor ${hovered ? 'hovered' : ''}`}
+        style={{ left: pos.x - 8, top: pos.y - 8 }}
       />
-      <div className="cursor-dot" style={{ left: dotPos.x, top: dotPos.y }} />
+      <div className="q-dot" style={{ left: dot.x - 2, top: dot.y - 2 }} />
     </>
   );
 }

@@ -1,30 +1,46 @@
-import { FiShield, FiHeart, FiArrowUp } from 'react-icons/fi';
+import { FiArrowUp } from 'react-icons/fi';
 
 export default function Footer() {
-  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
-
   return (
-    <footer className="relative border-t border-cyber-green/10 py-10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-2">
-            <FiShield className="text-cyber-green" />
-            <span className="font-display text-cyber-green text-sm tracking-wider">
-              VINOTH<span className="text-white">.M</span>
-            </span>
-          </div>
-          <p className="text-gray-500 text-sm font-mono flex items-center gap-2">
-            Built with <FiHeart className="text-cyber-red" /> passion for Cybersecurity by Vinoth M
-          </p>
-          <button onClick={scrollToTop} className="w-10 h-10 flex items-center justify-center border border-cyber-green/20 rounded-lg text-cyber-green hover:bg-cyber-green/10 transition-colors" id="scroll-to-top">
-            <FiArrowUp />
-          </button>
+    <footer style={{
+      borderTop: '1px solid rgba(139,92,246,0.1)',
+      padding: '40px 24px',
+      position: 'relative',
+    }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 20 }}>
+        {/* Logo */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{
+            width: 30, height: 30, borderRadius: 8,
+            background: 'linear-gradient(135deg, #8b5cf6, #22d3ee)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontFamily: 'Orbitron', fontWeight: 900, fontSize: '0.6rem', color: '#fff',
+          }}>VM</div>
+          <span style={{ fontFamily: 'Syne', fontWeight: 700, color: '#64748b', fontSize: '0.9rem' }}>
+            VINOTH<span style={{ color: '#8b5cf6' }}>.</span>M
+          </span>
         </div>
-        <div className="mt-6 pt-4 border-t border-cyber-green/5 text-center">
-          <p className="text-gray-600 text-xs font-mono">
-            © {new Date().getFullYear()} Vinoth M. All rights reserved. | Secured with 🛡️
-          </p>
-        </div>
+
+        {/* Center */}
+        <p style={{ fontFamily: 'Space Grotesk', color: '#475569', fontSize: '0.8rem', textAlign: 'center' }}>
+          © {new Date().getFullYear()} Vinoth M — Built with passion for Cybersecurity ⚡
+        </p>
+
+        {/* Scroll top */}
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          id="scroll-to-top"
+          style={{
+            width: 38, height: 38, borderRadius: 10,
+            background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.2)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: '#8b5cf6', cursor: 'pointer', transition: 'all 0.3s',
+          }}
+          onMouseEnter={e => e.currentTarget.style.background = 'rgba(139,92,246,0.25)'}
+          onMouseLeave={e => e.currentTarget.style.background = 'rgba(139,92,246,0.1)'}
+        >
+          <FiArrowUp />
+        </button>
       </div>
     </footer>
   );
