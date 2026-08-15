@@ -14,7 +14,7 @@ const defaultData = {
     linkedinUsername: 'vinothcyberstudent',
     location: 'Tirunelveli, Tamil Nadu',
     bio: 'Cybersecurity-focused Computer Science engineer with hands-on experience in Linux administration, VAPT, network security, and ethical hacking. Passionate about penetration testing, security research, and secure application development.',
-    resumeUrl: '/secure_docs/Vinoth_M_Resume.pdf',
+    resumeUrl: '/secure_docs/Vinoth_Resume_ATS.pdf',
   },
   education: {
     degree: 'B.E Computer Science & Engineering (Cyber Security)',
@@ -110,9 +110,10 @@ const defaultData = {
     { id: 'c3', title: 'Oracle Cloud Infrastructure AI Foundations Associate', issuer: 'Oracle', icon: '☁️', color: '#f59e0b', file: '/secure_docs/Oracle_vinoth.pdf' },
     { id: 'c4', title: 'Encoder-Decoder Architecture', issuer: 'Google Cloud', icon: '🧠', color: '#8b5cf6', file: '/secure_docs/vinoth_certificate_google.pdf' },
     { id: 'c5', title: 'Cyberentityz Industrial Visit Certificate', issuer: 'Cyberentityz', icon: '🏭', color: '#ff073a', file: '/secure_docs/iv_certificate_vinoth.pdf' },
+    { id: 'c6', title: 'IBM SkillsBuild Cybersecurity Fundamentals', issuer: 'IBM SkillsBuild', icon: '🔒', color: '#0062ff', file: '/secure_docs/IBM_SkillsBuild_Cybersecurity_Fundamentals.pdf' },
   ],
   achievements: [
-    { id: 'a1', number: 5, suffix: '+', label: 'Certifications', color: '#00ff41' },
+    { id: 'a1', number: 6, suffix: '+', label: 'Certifications', color: '#00ff41' },
     { id: 'a2', number: 2, suffix: '+', label: 'Security Projects', color: '#00e5ff' },
     { id: 'a3', number: 0, suffix: '', label: 'Cybersecurity Student', color: '#8b5cf6', isText: true },
     { id: 'a4', number: 0, suffix: '', label: 'Linux Enthusiast', color: '#f59e0b', isText: true },
